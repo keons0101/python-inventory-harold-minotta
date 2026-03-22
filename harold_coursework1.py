@@ -1,35 +1,59 @@
 inventory = {
     101: {
         "name": "Laptop",
+        "category": "Electronics",
+        "brand": ("Dell",),
         "quantity": 5,
         "price": 799.99
     },
     102: {
         "name": "Mouse",
+        "category": "Electronics",
+        "brand": ("Logitech",),
         "quantity": 10,
         "price": 25.50
     },
     103: {
         "name": "Keyboard",
+        "category": "Office",
+        "brand": ("HP",),
         "quantity": 8,
         "price": 20.15
     }
 }
-print("Welcome to Bigstore----------------------------------------")
+
+categories = ["Electronics", "Home", "Office"]
+product_ids = set(inventory.keys())
+
+print("Welcome to Xtore----------------------------------------")
 
 new_id = int(input("Enter product ID: "))
-new_name = input("Enter product name: ").strip().title()
-new_quantity = int(input("Enter quantity: "))
-new_price = float(input("Enter product price: "))
+if new_id in product_ids:
+    print("This ID already exists. Try another one.")
+else:
+    new_name = input("Enter product name: ").strip().capitalize()
+    new_category = input("Enter category: ").strip().capitalize()
+    new_brand = input("Enter brand name: ").strip().capitalize()
+    new_quantity = int(input("Enter quantity: "))
+    new_price = float(input("Enter product price: "))
 
-inventory[new_id] = {
-    "name": new_name,
-    "quantity": new_quantity,
-    "price": new_price
-}
+    inventory[new_id] = {
+        "name": new_name,
+        "category": new_category,
+        "brand": (new_brand,),
+        "quantity": new_quantity,
+        "price": new_price
+    }
 
-print("Item added successfully!!!")
-print(f"ID: {new_id} | Name: {new_name} | Quantity: {new_quantity} | Price: ${new_price:.2f}")
+    product_ids.add(new_id)
+
+    print("Item added successfully!!!")
+    print(f"ID: {new_id} | Name: {new_name} | Category: {new_category} | Brand: {new_brand} | Quantity: {new_quantity} | Price: ${new_price:.2f}")
+    
 print("-------------------------------------------------------------------------------------------")
 for product_id, product_data in inventory.items():
-    print(f"ID: {product_id} | Name: {product_data['name']} | Quantity: {product_data['quantity']} | Price: ${product_data['price']:.2f}")
+    print(f"ID: {product_id} | Name: {product_data['name']} | "
+        f"Category: {product_data['category']} | "
+        f"Brand: {product_data['brand'][0]} | "
+        f"Quantity: {product_data['quantity']} | "
+        f"Price: ${product_data['price']:.2f}")
