@@ -1,25 +1,18 @@
+class Product:
+    def __init__(self, name, category, brand, quantity, price):
+        self.name = name
+        self.category = category
+        self.brand = brand 
+        self.quantity = quantity
+        self.price = price
+
+    def display(self):
+        return f"{self.name} | {self.category} | {self.brand} | {self.quantity} | ${self.price:.2f}"
+
 inventory = {
-    101: {
-        "name": "Laptop",
-        "category": "Electronics",
-        "brand": ("Dell",),
-        "quantity": 5,
-        "price": 799.99
-    },
-    102: {
-        "name": "Mouse",
-        "category": "Electronics",
-        "brand": ("Logitech",),
-        "quantity": 10,
-        "price": 25.50
-    },
-    103: {
-        "name": "Keyboard",
-        "category": "Office",
-        "brand": ("HP",),
-        "quantity": 8,
-        "price": 20.15
-    }
+    101: Product("Laptop", "Electronics", "Dell", 5, 799.99),
+    102: Product("Mouse", "Electronics", "Logitech", 10, 25.50),
+    103: Product("Keyboard", "Office", "HP", 8, 20.15)
 }
 
 categories = ["Electronics", "Home", "Office"]
@@ -38,17 +31,12 @@ def add_product(inventory, product_ids, categories):
     
     new_name = input("Enter product name: ").strip().capitalize()
     new_category = input("Enter category: ").strip().capitalize()
+
     new_brand = input("Enter brand name: ").strip().capitalize()
     new_quantity = int(input("Enter quantity: "))
     new_price = float(input("Enter product price: "))
 
-    inventory[new_id] = {
-        "name": new_name,
-        "category": new_category,
-        "brand": (new_brand,),
-        "quantity": new_quantity,
-        "price": new_price
-    }
+    inventory[new_id] = Product(new_name, new_category, new_brand, new_quantity, new_price)
 
     product_ids.add(new_id)
 
@@ -60,11 +48,7 @@ def add_product(inventory, product_ids, categories):
 def show_inventory(inventory):
     print("-------------------------------------------------------------------------------------------")
     for product_id, product_data in inventory.items():
-        print(f"ID: {product_id} | Name: {product_data['name']} | "
-            f"Category: {product_data['category']} | "
-            f"Brand: {product_data['brand'][0]} | "
-            f"Quantity: {product_data['quantity']} | "
-            f"Price: ${product_data['price']:.2f}")
+        print(f"ID: {product_id} | {product_data.display()}")
 
 # ===========================================================================================================
 
@@ -82,13 +66,13 @@ def update_product(inventory):
     new_price = input("New price: ")
 
     if new_name != "":
-        inventory[product_id]["name"] = new_name.capitalize()
+        inventory[product_id].name = new_name.capitalize()
 
     if new_quantity != "":
-        inventory[product_id]["quantity"] = int(new_quantity)
+        inventory[product_id].quantity = int(new_quantity)
 
     if new_price != "":
-        inventory[product_id]["price"] = float(new_price)
+        inventory[product_id].price = float(new_price)
 
     print("Product updated successfully!")
 
@@ -110,11 +94,9 @@ def remove_product(inventory, product_ids):
 
 def save_inventory_to_file(inventory):
     file = open("inventory.txt", "w")
-    
     for product_id, product_data in inventory.items():
-        line = f"{product_id},{product_data['name']},{product_data['category']},{product_data['brand'][0]},{product_data['quantity']},{product_data['price']}\n"
+        line = f"{product_id},{product_data.name},{product_data.category},{product_data.brand},{product_data.quantity},{product_data.price}\n"
         file.write(line)
-
     file.close()
     print("Inventory saved to file!")
 
@@ -127,8 +109,8 @@ while menuRunning:
     print("2. View inventory")
     print("3. Update product")
     print("4. Remove product")
-    print("5. Exit")
-    print("6. Save inventory to file")
+    print("5. Save inventory to file")
+    print("6. Exit")
 
     option = input("Choose an option: ")
 
@@ -145,11 +127,11 @@ while menuRunning:
         remove_product(inventory, product_ids)
 
     elif option == "5":
-        print("Exiting...")
-        menuRunning = False
+        save_inventory_to_file(inventory)
 
     elif option == "6":
-        save_inventory_to_file(inventory)
+        print("Exiting...")
+        menuRunning = False
 
     else:
         print("Invalid option")
