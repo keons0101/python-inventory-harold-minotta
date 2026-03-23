@@ -9,6 +9,14 @@ class Product:
     def display(self):
         return f"{self.name} | {self.category} | {self.brand} | {self.quantity} | ${self.price:.2f}"
 
+    def update(self, name="", quantity="", price=""):
+        if name != "":
+            self.name = name.capitalize()
+        if quantity != "":
+            self.quantity = int(quantity)
+        if price != "":
+            self.price = float(price)
+
 inventory = {
     101: Product("Laptop", "Electronics", "Dell", 5, 799.99),
     102: Product("Mouse", "Electronics", "Logitech", 10, 25.50),
@@ -65,14 +73,7 @@ def update_product(inventory):
     new_quantity = input("New quantity: ")
     new_price = input("New price: ")
 
-    if new_name != "":
-        inventory[product_id].name = new_name.capitalize()
-
-    if new_quantity != "":
-        inventory[product_id].quantity = int(new_quantity)
-
-    if new_price != "":
-        inventory[product_id].price = float(new_price)
+    inventory[product_id].update(new_name, new_quantity, new_price)
 
     print("Product updated successfully!")
 
