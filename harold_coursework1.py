@@ -90,15 +90,32 @@ def update_product(inventory):
     if new_price != "":
         inventory[product_id]["price"] = float(new_price)
 
+    print("Product updated successfully!")
+
+# ===========================================================================================================
+
+def remove_product(inventory, product_ids):
+    product_id = int(input("Enter product ID to remove: "))
+
+    if product_id not in inventory:
+        print("Product not found!!!")
+        return
+
+    del inventory[product_id]
+    product_ids.remove(product_id)
+
+    print("Product removed successfully!!!")
+
 # ===========================================================================================================
 
 menuRunning = True
 
 while menuRunning:
-    print("\n--- MENU ---")
     print("1. Add product")
     print("2. View inventory")
-    print("3. Exit")
+    print("3. Update product")
+    print("4. Remove product")
+    print("5. Exit")
 
     option = input("Choose an option: ")
 
@@ -112,6 +129,9 @@ while menuRunning:
         update_product(inventory)
 
     elif option == "4":
+        remove_product(inventory, product_ids)
+
+    elif option == "5":
         print("Exiting...")
         menuRunning = False
 
