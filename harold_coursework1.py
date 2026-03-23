@@ -108,6 +108,18 @@ def remove_product(inventory, product_ids):
 
 # ===========================================================================================================
 
+def save_inventory_to_file(inventory):
+    file = open("inventory.txt", "w")
+    
+    for product_id, product_data in inventory.items():
+        line = f"{product_id},{product_data['name']},{product_data['category']},{product_data['brand'][0]},{product_data['quantity']},{product_data['price']}\n"
+        file.write(line)
+
+    file.close()
+    print("Inventory saved to file!")
+
+# ===========================================================================================================
+
 menuRunning = True
 
 while menuRunning:
@@ -116,6 +128,7 @@ while menuRunning:
     print("3. Update product")
     print("4. Remove product")
     print("5. Exit")
+    print("6. Save inventory to file")
 
     option = input("Choose an option: ")
 
@@ -134,6 +147,9 @@ while menuRunning:
     elif option == "5":
         print("Exiting...")
         menuRunning = False
+
+    elif option == "6":
+        save_inventory_to_file(inventory)
 
     else:
         print("Invalid option")
