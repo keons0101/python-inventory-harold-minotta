@@ -32,7 +32,7 @@ class PerishableProduct(Product):
     def update(self, name="", quantity="", price="", expiration_date=""):
         super().update(name, quantity, price)
 
-        # only update expiration if needed
+        #only update expiration if needed
         if expiration_date != "":
             self.expiration_date = expiration_date
 
